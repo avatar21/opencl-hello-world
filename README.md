@@ -1,5 +1,5 @@
 # Hello OpenCL World
-Maintain by Avatar Ng (http://www.minfaatong.tk), originally fork from Jeff Heaton's project repositories.
+Maintain by [Avatar Ng](http://www.minfaatong.tk), originally fork from Jeff Heaton's project repositories.
 
 ## Changes
 Updated to Gradle 4.7, Java 1.8, Lwjgl 2.9.3
@@ -22,5 +22,6 @@ To run this application simply issue the command:
 `gradlew run`
 
 ## References
-- Credit Jeff Heaton
+- Credit[Jeff Heaton](http://www.heatonresearch.com/)
+- GPU Programming in Java Using OpenCL - [Part 1](https://www.youtube.com/watch?v=4q9fPOI-x80), [Part 2](https://www.youtube.com/watch?v=gZDNvL28PVA), [Part 3](https://www.youtube.com/watch?v=mTOcsUFyETM)
 
