@@ -19,7 +19,6 @@ dependencies {
 
 def platforms = ['windows', 'linux', 'osx']
 platforms.each { platform ->
-//    task "${platform}Natives" {
     tasks.create(name: "${platform}Natives") {
         def outputDir = "$buildDir/natives/$platform"
         inputs.files(configurations.compile)
@@ -46,8 +45,10 @@ task natives {
     dependsOn platforms.collect { "${it}Natives" }.findAll { tasks[it] }
 }
 
-// Unfortunatly the Gradle app plug-in does not allow me to pass in -D options.
-// LWJGL
+/**
+ * Unfortunately the Gradle app plug-in does not allow me to pass in -D options.
+ * LWJGL
+ */
 run { 
 	systemProperties = [ 'java.library.path' : './build/natives/osx' ]
 	it.dependsOn natives
