@@ -1,0 +1,13 @@
+.DS_Store
+.gradle
+.idea
+
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+
+build/*
+
+!gradle-wrapper.jar

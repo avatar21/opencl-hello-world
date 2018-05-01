@@ -1,0 +1,54 @@
+apply plugin: 'application'
+apply plugin: 'java'
+
+mainClassName = 'com.jeffheaton.opencl.HelloOpenCL'
+sourceCompatibility = 1.8
+
+repositories {
+//    mavenCentral()
+    jcenter()
+}
+dependencies {
+    compile 'org.lwjgl.lwjgl:lwjgl:2.9.3'
+    compile 'org.apache.logging.log4j:log4j-api:2.11.0'
+    compile 'org.apache.logging.log4j:log4j-core:2.11.0'
+    compile 'org.slf4j:slf4j-log4j12:1.7.18'
+    testCompile 'junit:junit:4.+'
+
+}
+
+def platforms = ['windows', 'linux', 'osx']
+platforms.each { platform ->
+//    task "${platform}Natives" {
+    tasks.create(name: "${platform}Natives") {
+        def outputDir = "$buildDir/natives/$platform"
+        inputs.files(configurations.compile)
+        outputs.dir(outputDir)
+        doLast {
+            copy {
+                def artifacts = configurations.compile.resolvedConfiguration.resolvedArtifacts
+                    .findAll { it.classifier == "natives-$platform" }
+                artifacts.each {
+                    from zipTree(it.file)
+                }
+                into outputDir
+            }
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.7'
+}
+
+task natives {
+    description "Copies native libraries to an appropriate directory."
+    dependsOn platforms.collect { "${it}Natives" }.findAll { tasks[it] }
+}
+
+// Unfortunatly the Gradle app plug-in does not allow me to pass in -D options.
+// LWJGL
+run { 
+	systemProperties = [ 'java.library.path' : './build/natives/osx' ]
+	it.dependsOn natives
+}
